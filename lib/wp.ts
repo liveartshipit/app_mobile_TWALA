@@ -61,6 +61,46 @@ export async function fetchPosts(params: Record<string, string>): Promise<Post[]
   }));
 }
 
+// Best-match search: pull a wider set of matches, then rank by where the
+// words appear (title > URL slug > summary), with recency only as a tie-breaker.
+export async function searchPosts(query: string, limit: number): Promise<Post[]> {
+  const qs = new URLSearchParams({
+    _fields: "title,link,date,excerpt,slug",
+    status: "publish",
+    search: query,
+    orderby: "relevance",
+    per_page: "40",
+  });
+  const res = await fetch(`${SITE}/wp-json/wp/v2/posts?${qs}`, {
+    headers: { "User-Agent": "worksmarto-mcp/1.0" },
+    next: { revalidate: 600 },
+  } as RequestInit);
+  if (!res.ok) throw new Error(`Worksmarto API returned ${res.status}`);
+  const data = (await res.json()) as (WpPost & { slug: string })[];
+
+  const phrase = query.toLowerCase().trim();
+  const words = phrase.split(/[^a-z0-9]+/).filter((w) => w.length > 1);
+  const hits = (hay: string) => words.filter((w) => new RegExp(`\\b${w}`, "i").test(hay)).length;
+
+  const scored = data.map((p, i) => {
+    const title = clean(p.title.rendered).toLowerCase();
+    const slug = (p.slug || "").replace(/-/g, " ");
+    const summary = clean(p.excerpt.rendered).toLowerCase();
+    let score = hits(title) * 10 + hits(slug) * 6 + hits(summary) * 3;
+    if (title.includes(phrase)) score += 15;
+    score += Math.max(0, 40 - i) * 0.05; // WordPress relevance order as a small tie-breaker
+    return { p, score };
+  });
+  scored.sort((a, b) => b.score - a.score || b.p.date.localeCompare(a.p.date));
+
+  return scored.slice(0, limit).map(({ p }) => ({
+    title: clean(p.title.rendered),
+    url: withUtm(p.link),
+    date: p.date.slice(0, 10),
+    summary: clean(p.excerpt.rendered).slice(0, 280),
+  }));
+}
+
 // Tag every link so MCP traffic shows up separately in analytics.
 export function withUtm(url: string): string {
   try {

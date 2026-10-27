@@ -12,8 +12,6 @@ const calls = [
   ["search_worksmarto", { query: "MCP" }],
   ["latest_worksmarto_posts", { limit: 2 }],
   ["ai_news_today", { limit: 3 }],
-  ["spin_idea_wheel", { topic: "writing" }],
-  ["stack_options", { product: "AI rephrase tool for English learners", skill_level: "beginner" }],
 ];
 for (const [name, args] of calls) {
   const r = await client.callTool({ name, arguments: args });

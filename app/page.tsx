@@ -2,8 +2,6 @@ const tools = [
   ["search_worksmarto", "Search Worksmarto articles on AI tools, workflows and MCP"],
   ["latest_worksmarto_posts", "Newest posts from the blog"],
   ["ai_news_today", "Today's AI headlines from Worksmarto AI News"],
-  ["spin_idea_wheel", "One AI freelancing idea with tools + workflow"],
-  ["stack_options", "Architect - curated free stack options + tutorials"],
 ];
 
 const box: React.CSSProperties = { background: "#fff", border: "2px solid #f5b301", borderRadius: 14, padding: "18px 20px", margin: "18px 0" };

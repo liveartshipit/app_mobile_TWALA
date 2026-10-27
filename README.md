@@ -9,11 +9,9 @@ Add one URL to Claude, ChatGPT, Cursor or any MCP-ready app and use Worksmarto's
 
 | Tool | What it does | Data |
 |---|---|---|
-| `search_worksmarto` | Search Worksmarto articles | WordPress REST API |
+| `search_worksmarto` | Search Worksmarto articles (best match first) | WordPress REST API |
 | `latest_worksmarto_posts` | Newest posts | WordPress REST API |
 | `ai_news_today` | Headlines from news.worksmarto.com | news site |
-| `spin_idea_wheel` | One AI freelancing idea + tools + workflow | built-in |
-| `stack_options` | Architect: curated free stack options per layer + related tutorials | built-in + WordPress |
 
 **No API keys, no AI calls.** The server returns curated data; the user's own assistant (Claude, ChatGPT, Gemini) writes the final answer. Cost: ₹0.
 
