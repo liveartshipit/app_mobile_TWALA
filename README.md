@@ -7,31 +7,35 @@ Add one URL to Claude, ChatGPT, Cursor or any MCP-ready app and use Worksmarto's
 
 ## Tools
 
-| Tool | What it does | AI cost |
+| Tool | What it does | Data |
 |---|---|---|
-| `search_worksmarto` | Search Worksmarto articles (WordPress REST API) | none |
-| `latest_worksmarto_posts` | Newest posts | none |
-| `ai_news_today` | Headlines from news.worksmarto.com | none |
-| `spin_idea_wheel` | One AI freelancing idea + tools + workflow | none (static data) |
-| `plan_stack` | Architect: lean stack + build plan | Groq, rate-limited |
+| `search_worksmarto` | Search Worksmarto articles | WordPress REST API |
+| `latest_worksmarto_posts` | Newest posts | WordPress REST API |
+| `ai_news_today` | Headlines from news.worksmarto.com | news site |
+| `spin_idea_wheel` | One AI freelancing idea + tools + workflow | built-in |
+| `stack_options` | Architect: curated free stack options per layer + related tutorials | built-in + WordPress |
+
+**No API keys, no AI calls.** The server returns curated data; the user's own assistant (Claude, ChatGPT, Gemini) writes the final answer. Cost: ₹0.
 
 Every link carries `utm_source=mcp&utm_medium=ai-assistant`, so MCP traffic shows up separately in analytics.
 
 ## Stack
 
-Next.js 15 · `mcp-handler` (Streamable HTTP) · Zod · Groq (`openai/gpt-oss-120b`) with optional OpenRouter fallback · Vercel Hobby.
+Next.js 15 · `mcp-handler` (Streamable HTTP) · Zod · Vercel Hobby.
 
 ## Deploy (Vercel)
 
 1. Import this repo in Vercel → Framework: Next.js.
-2. Environment variables: `GROQ_API_KEY` (required for `plan_stack`). Optional: see `.env.example`.
+2. No environment variables needed. Optional: `WP_SITE_URL`, `NEWS_SITE_URL`, `NEWS_FEED_URL`.
 3. Deploy. The MCP endpoint is `https://<project>.vercel.app/mcp`.
 4. Custom domain: Vercel → Settings → Domains → add `mcp.worksmarto.com`, then in Hostinger DNS add
    `CNAME  mcp  →  cname.vercel-dns.com`.
 
 ## Connect
 
-**Claude:** Settings → Connectors → Add custom connector → paste the server URL.
+**Claude:** claude.ai/customize/connectors → + Add → Add custom connector → paste the server URL → Authentication: No sign in.
+
+**ChatGPT (paid plans):** Settings → Apps → enable Developer mode → Create → paste the server URL.
 
 **Cursor / VS Code / Claude Desktop:**
 
@@ -43,7 +47,6 @@ Next.js 15 · `mcp-handler` (Streamable HTTP) · Zod · Groq (`openai/gpt-oss-12
 
 ```bash
 npm install
-cp .env.example .env.local   # add GROQ_API_KEY
 npm run dev
 npm run test:tools           # calls every tool on http://localhost:3000/mcp
 ```
@@ -51,8 +54,8 @@ npm run test:tools           # calls every tool on http://localhost:3000/mcp
 ## Safety
 
 - Read-only: only public, published posts are read. No WordPress credentials on this server.
-- AI keys live in env vars only. AI tools are capped per IP per hour and globally per day (in-memory, best-effort).
+- No secrets on the server at all, so nothing to leak and no quota to drain.
 - No user input is stored.
-- Answers focus on productivity; no income promises, no health, legal or financial advice.
+- Content focuses on productivity; no income promises, no health, legal or financial advice.
 
 Built by Worksmarto · Software Innovation Labs.

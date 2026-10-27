@@ -3,7 +3,7 @@ const tools = [
   ["latest_worksmarto_posts", "Newest posts from the blog"],
   ["ai_news_today", "Today's AI headlines from Worksmarto AI News"],
   ["spin_idea_wheel", "One AI freelancing idea with tools + workflow"],
-  ["plan_stack", "Architect - lean, mostly free stack + build plan"],
+  ["stack_options", "Architect - curated free stack options + tutorials"],
 ];
 
 const box: React.CSSProperties = { background: "#fff", border: "2px solid #f5b301", borderRadius: 14, padding: "18px 20px", margin: "18px 0" };
@@ -15,7 +15,7 @@ export default function Home() {
       <p style={{ color: "#e8590c", fontWeight: 700, letterSpacing: 1, margin: 0 }}>WORKSMARTO MCP</p>
       <h1 style={{ fontSize: 36, margin: "8px 0 12px" }}>Worksmarto inside your AI assistant</h1>
       <p style={{ fontSize: 18, lineHeight: 1.5 }}>
-        Add one URL to Claude, ChatGPT, Cursor or any MCP-ready app and use Worksmarto&apos;s free AI tools right in your chat.
+        Add one URL to Claude, ChatGPT, Cursor or any MCP-ready app and use Worksmarto&apos;s free tools right in your chat.
       </p>
 
       <div style={box}>
@@ -43,7 +43,7 @@ export default function Home() {
       ))}
 
       <p style={{ marginTop: 30, fontSize: 14, color: "#6b5d3a" }}>
-        Free to use. AI tools are rate-limited. Nothing you send is stored. Built by{" "}
+        Free to use. No sign-up. Nothing you send is stored. Built by{" "}
         <a href="https://worksmarto.com/?utm_source=mcp-site" style={{ color: "#e8590c" }}>Worksmarto</a> · Software Innovation Labs.
       </p>
     </main>

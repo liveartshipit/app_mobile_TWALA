@@ -13,10 +13,10 @@ const calls = [
   ["latest_worksmarto_posts", { limit: 2 }],
   ["ai_news_today", { limit: 3 }],
   ["spin_idea_wheel", { topic: "writing" }],
-  ["plan_stack", { product: "A rephrase tool for English learners" }],
+  ["stack_options", { product: "AI rephrase tool for English learners", skill_level: "beginner" }],
 ];
 for (const [name, args] of calls) {
   const r = await client.callTool({ name, arguments: args });
-  console.log(`\n=== ${name} ===\n${r.content[0].text.slice(0, 600)}`);
+  console.log(`\n=== ${name} ===\n${r.content[0].text.slice(0, 2500)}`);
 }
 await client.close();

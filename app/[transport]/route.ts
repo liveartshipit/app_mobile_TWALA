@@ -3,16 +3,24 @@ import { z } from "zod";
 import { fetchPosts, formatPosts, withUtm, SITE } from "@/lib/wp";
 import { getNews } from "@/lib/news";
 import { spin, formatIdea } from "@/lib/ideas";
-import { ask } from "@/lib/groq";
-import { checkLimit, clientIp } from "@/lib/limits";
+import { stackOptions, detectKinds } from "@/lib/stacks";
 
-export const maxDuration = 60;
+export const maxDuration = 30;
 
 const text = (t: string) => ({ content: [{ type: "text" as const, text: t }] });
 
 const FOOTER = `\n\n---\nPowered by Worksmarto (${withUtm(SITE)}) - AI workflows for solopreneurs. Free newsletter: ${withUtm(SITE + "/subscribe/")}`;
 
-const SAFETY = `Rules: focus on productivity, tools and workflows. Never promise income, revenue or financial results. Never give health, medical, legal or financial advice. Be concise, practical and honest about risks. Use plain text with short headings and bullet points.`;
+const KIND_QUERY: Record<string, string> = {
+  mcp: "MCP",
+  wordpress: "WordPress",
+  ai: "AI tools",
+  saas: "micro SaaS",
+  news: "AI news",
+  mobile: "app",
+  vision: "AI",
+  tool: "AI tools",
+};
 
 const handler = createMcpHandler(
   (server) => {
@@ -65,24 +73,22 @@ const handler = createMcpHandler(
     );
 
     server.tool(
-      "plan_stack",
-      "Worksmarto Architect: get a lean, mostly free tech stack and build plan for a micro SaaS or AI tool (frontend, backend, database, AI API, hosting, steps). Limited free uses per hour.",
+      "stack_options",
+      "Worksmarto Architect: curated, mostly free tech-stack options per layer (frontend, backend, database & auth, AI API, hosting) for a micro SaaS or AI tool, tagged by free tier, skill level and where Worksmarto uses them, plus related Worksmarto tutorials. Use the options to recommend a stack and build plan.",
       {
-        product: z.string().min(10).max(600).describe("What you want to build"),
+        product: z.string().min(5).max(600).describe("What the user wants to build"),
         skill_level: z.enum(["beginner", "intermediate", "advanced"]).default("beginner"),
       },
-      async ({ product, skill_level }, extra) => {
-        const gate = checkLimit(clientIp(extra?.requestInfo?.headers));
-        if (!gate.ok) return text(gate.reason);
+      async ({ product, skill_level }) => {
+        let out = stackOptions(product, skill_level);
         try {
-          const out = await ask(
-            `You are Worksmarto Architect. Recommend a lean stack that favours free tiers and open source (e.g. React/Next.js, Supabase, Groq, Vercel, WordPress when it fits). Sections: 1) Recommended stack table (layer - tool - why - free tier?) 2) Architecture in 4-6 bullet points 3) Build plan in numbered steps sized for the user's skill level 4) What to skip in v1 5) Security basics (keys server-side, rate limits). ${SAFETY}`,
-            `Product: ${product}\nSkill level: ${skill_level}`
-          );
-          return text(out + FOOTER);
-        } catch (e) {
-          return text(`Architect is busy right now (${(e as Error).message}). Try again in a minute.`);
+          const q = KIND_QUERY[detectKinds(product)[0]] || "AI tools";
+          const posts = await fetchPosts({ search: q, per_page: "3" });
+          if (posts.length) out += "\n\n" + formatPosts(posts, "Related Worksmarto tutorials:");
+        } catch {
+          /* tutorials are optional */
         }
+        return text(out + FOOTER);
       }
     );
   },
@@ -91,7 +97,7 @@ const handler = createMcpHandler(
   },
   {
     basePath: "",
-    maxDuration: 60,
+    maxDuration: 30,
     disableSse: true,
     verboseLogs: false,
   }
