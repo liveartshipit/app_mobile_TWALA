@@ -65,28 +65,6 @@ const handler = createMcpHandler(
     );
 
     server.tool(
-      "validate_idea",
-      "Worksmarto AI Idea Validator: get a quick, honest breakdown of a startup or micro SaaS idea - problem, audience, competitors, how competitors market, risks, gaps to exploit and next steps. Limited free uses per hour.",
-      {
-        idea: z.string().min(10).max(600).describe("The idea in a few sentences"),
-        market: z.string().max(60).optional().describe("Target country or market, e.g. 'India'"),
-      },
-      async ({ idea, market }, extra) => {
-        const gate = checkLimit(clientIp(extra?.requestInfo?.headers));
-        if (!gate.ok) return text(gate.reason);
-        try {
-          const out = await ask(
-            `You are the Worksmarto AI Idea Validator. Give a sharp, honest validation in these sections: 1) Problem & who has it 2) Target audience 3) Existing solutions/competitors 4) How competitors market 5) Differentiation 6) Key risks 7) MVP scope (smallest useful version) 8) Score out of 10 with one-line reason. Then: Top 3 gaps to exploit, and 3 immediate next actions for this week. ${SAFETY}`,
-            `Idea: ${idea}${market ? `\nMarket: ${market}` : ""}`
-          );
-          return text(out + FOOTER);
-        } catch (e) {
-          return text(`The validator is busy right now (${(e as Error).message}). Try again in a minute.`);
-        }
-      }
-    );
-
-    server.tool(
       "plan_stack",
       "Worksmarto Architect: get a lean, mostly free tech stack and build plan for a micro SaaS or AI tool (frontend, backend, database, AI API, hosting, steps). Limited free uses per hour.",
       {

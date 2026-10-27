@@ -13,7 +13,6 @@ Add one URL to Claude, ChatGPT, Cursor or any MCP-ready app and use Worksmarto's
 | `latest_worksmarto_posts` | Newest posts | none |
 | `ai_news_today` | Headlines from news.worksmarto.com | none |
 | `spin_idea_wheel` | One AI freelancing idea + tools + workflow | none (static data) |
-| `validate_idea` | AI Idea Validator breakdown | Groq, rate-limited |
 | `plan_stack` | Architect: lean stack + build plan | Groq, rate-limited |
 
 Every link carries `utm_source=mcp&utm_medium=ai-assistant`, so MCP traffic shows up separately in analytics.
@@ -25,7 +24,7 @@ Next.js 15 · `mcp-handler` (Streamable HTTP) · Zod · Groq (`openai/gpt-oss-12
 ## Deploy (Vercel)
 
 1. Import this repo in Vercel → Framework: Next.js.
-2. Environment variables: `GROQ_API_KEY` (required for AI tools). Optional: see `.env.example`.
+2. Environment variables: `GROQ_API_KEY` (required for `plan_stack`). Optional: see `.env.example`.
 3. Deploy. The MCP endpoint is `https://<project>.vercel.app/mcp`.
 4. Custom domain: Vercel → Settings → Domains → add `mcp.worksmarto.com`, then in Hostinger DNS add
    `CNAME  mcp  →  cname.vercel-dns.com`.

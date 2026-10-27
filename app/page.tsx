@@ -3,7 +3,6 @@ const tools = [
   ["latest_worksmarto_posts", "Newest posts from the blog"],
   ["ai_news_today", "Today's AI headlines from Worksmarto AI News"],
   ["spin_idea_wheel", "One AI freelancing idea with tools + workflow"],
-  ["validate_idea", "AI Idea Validator - honest breakdown of your idea"],
   ["plan_stack", "Architect - lean, mostly free stack + build plan"],
 ];
 

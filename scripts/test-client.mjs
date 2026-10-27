@@ -13,7 +13,6 @@ const calls = [
   ["latest_worksmarto_posts", { limit: 2 }],
   ["ai_news_today", { limit: 3 }],
   ["spin_idea_wheel", { topic: "writing" }],
-  ["validate_idea", { idea: "AI resume tool for freshers in India", market: "India" }],
   ["plan_stack", { product: "A rephrase tool for English learners" }],
 ];
 for (const [name, args] of calls) {
