@@ -59,10 +59,13 @@ const handler = createMcpHandler(
 
     server.tool(
       "ai_news_today",
-      "Get today's AI news headlines from Worksmarto AI News (news.worksmarto.com).",
-      { limit: z.number().int().min(1).max(15).default(8) },
+      "Get today's AI news from Worksmarto AI News (news.worksmarto.com): a daily brief plus summarised stories with why each matters for freelancers and solopreneurs. Optionally filter by topic.",
+      {
+        limit: z.number().int().min(1).max(15).default(6),
+        topic: z.string().max(60).optional().describe("Optional filter, e.g. 'OpenAI', 'coding', 'agents'"),
+      },
       { title: "AI news today", readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: true },
-      async ({ limit }) => text(await getNews(limit))
+      async ({ limit, topic }) => text(await getNews(limit, topic))
     );
 
     server.tool(
