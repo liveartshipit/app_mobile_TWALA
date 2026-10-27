@@ -10,39 +10,39 @@ type Option = {
   free: boolean;
   levels: Level[];
   url: string;
-  worksmarto?: string; // where Worksmarto uses it
+  pick?: boolean; // Worksmarto-recommended
   tags?: string[]; // fits these product kinds
 };
 
 const LAYERS: Record<string, Option[]> = {
   Frontend: [
-    { name: "React (Vite)", note: "Fast single-page apps; huge ecosystem.", free: true, levels: ["intermediate", "advanced"], url: "https://react.dev", worksmarto: "Architect", tags: ["saas", "ai", "dashboard"] },
-    { name: "Next.js", note: "React with server routes built in; ideal on Vercel; hides API keys server-side.", free: true, levels: ["intermediate", "advanced"], url: "https://nextjs.org", worksmarto: "Worksmarto MCP", tags: ["saas", "ai", "mcp", "api"] },
-    { name: "Plain HTML + Alpine.js + Tailwind CDN", note: "No build step; drop into any page or WordPress shortcode.", free: true, levels: ["beginner", "intermediate"], url: "https://alpinejs.dev", worksmarto: "Comply", tags: ["tool", "widget", "wordpress"] },
-    { name: "WordPress + shortcode", note: "Content site and tool in one place; easy SEO.", free: true, levels: ["beginner"], url: "https://wordpress.org", worksmarto: "Idea Validator", tags: ["blog", "content", "wordpress", "tool"] },
+    { name: "React (Vite)", note: "Fast single-page apps; huge ecosystem.", free: true, levels: ["intermediate", "advanced"], url: "https://react.dev", pick: true, tags: ["saas", "ai", "dashboard"] },
+    { name: "Next.js", note: "React with server routes built in; ideal on Vercel; hides API keys server-side.", free: true, levels: ["intermediate", "advanced"], url: "https://nextjs.org", pick: true, tags: ["saas", "ai", "mcp", "api"] },
+    { name: "Plain HTML + Alpine.js + Tailwind CDN", note: "No build step; drop into any page or WordPress shortcode.", free: true, levels: ["beginner", "intermediate"], url: "https://alpinejs.dev", pick: true, tags: ["tool", "widget", "wordpress"] },
+    { name: "WordPress + shortcode", note: "Content site and tool in one place; easy SEO.", free: true, levels: ["beginner"], url: "https://wordpress.org", pick: true, tags: ["blog", "content", "wordpress", "tool"] },
   ],
   "Backend / API": [
-    { name: "Next.js route handlers on Vercel", note: "Serverless functions next to the frontend; keys stay in env vars.", free: true, levels: ["intermediate", "advanced"], url: "https://vercel.com/docs/functions", worksmarto: "Worksmarto MCP", tags: ["saas", "ai", "mcp", "api"] },
+    { name: "Next.js route handlers on Vercel", note: "Serverless functions next to the frontend; keys stay in env vars.", free: true, levels: ["intermediate", "advanced"], url: "https://vercel.com/docs/functions", pick: true, tags: ["saas", "ai", "mcp", "api"] },
     { name: "Supabase Edge Functions", note: "Serverless functions beside your database and auth.", free: true, levels: ["intermediate", "advanced"], url: "https://supabase.com/docs/guides/functions", tags: ["saas", "ai"] },
-    { name: "WordPress custom plugin (PHP REST route)", note: "REST endpoint inside WordPress; proxies AI calls so keys stay hidden.", free: true, levels: ["beginner", "intermediate"], url: "https://developer.wordpress.org/rest-api/", worksmarto: "Idea Validator, Comply", tags: ["wordpress", "tool"] },
+    { name: "WordPress custom plugin (PHP REST route)", note: "REST endpoint inside WordPress; proxies AI calls so keys stay hidden.", free: true, levels: ["beginner", "intermediate"], url: "https://developer.wordpress.org/rest-api/", pick: true, tags: ["wordpress", "tool"] },
     { name: "Cloudflare Workers", note: "Edge functions with a generous free plan; great for small APIs.", free: true, levels: ["intermediate", "advanced"], url: "https://workers.cloudflare.com", tags: ["api", "tool"] },
   ],
   "Database & auth": [
-    { name: "Supabase", note: "Postgres + auth + storage in one; free tier for MVPs.", free: true, levels: ["beginner", "intermediate", "advanced"], url: "https://supabase.com/pricing", worksmarto: "Architect", tags: ["saas", "ai", "dashboard"] },
+    { name: "Supabase", note: "Postgres + auth + storage in one; free tier for MVPs.", free: true, levels: ["beginner", "intermediate", "advanced"], url: "https://supabase.com/pricing", pick: true, tags: ["saas", "ai", "dashboard"] },
     { name: "Firebase", note: "Auth + realtime DB; strong for mobile apps.", free: true, levels: ["beginner", "intermediate"], url: "https://firebase.google.com/pricing", tags: ["mobile", "app"] },
     { name: "WordPress users + WooCommerce", note: "Accounts and paid plans without building auth yourself.", free: true, levels: ["beginner"], url: "https://woocommerce.com", tags: ["wordpress", "subscription"] },
     { name: "No database (stateless)", note: "Skip the DB in v1 if nothing needs saving.", free: true, levels: ["beginner", "intermediate", "advanced"], url: "https://worksmarto.com", tags: ["tool", "mcp", "widget"] },
   ],
   "AI model API": [
-    { name: "Groq", note: "Very fast open models via an OpenAI-compatible API; free tier.", free: true, levels: ["beginner", "intermediate", "advanced"], url: "https://console.groq.com", worksmarto: "Architect, Idea Validator", tags: ["ai"] },
+    { name: "Groq", note: "Very fast open models via an OpenAI-compatible API; free tier.", free: true, levels: ["beginner", "intermediate", "advanced"], url: "https://console.groq.com", pick: true, tags: ["ai"] },
     { name: "Google AI Studio (Gemini)", note: "Free tier; multimodal (images, PDFs).", free: true, levels: ["beginner", "intermediate", "advanced"], url: "https://aistudio.google.com", tags: ["ai", "vision"] },
-    { name: "OpenRouter", note: "One key for many models, including free ones; good as a fallback.", free: true, levels: ["intermediate", "advanced"], url: "https://openrouter.ai", worksmarto: "AI News", tags: ["ai"] },
-    { name: "No AI call (let the user's AI do it)", note: "Serve data via MCP and let Claude/ChatGPT write the answer: zero cost.", free: true, levels: ["intermediate", "advanced"], url: "https://modelcontextprotocol.io", worksmarto: "Worksmarto MCP", tags: ["mcp"] },
+    { name: "OpenRouter", note: "One key for many models, including free ones; good as a fallback.", free: true, levels: ["intermediate", "advanced"], url: "https://openrouter.ai", pick: true, tags: ["ai"] },
+    { name: "No AI call (let the user's AI do it)", note: "Serve data via MCP and let Claude/ChatGPT write the answer: zero cost.", free: true, levels: ["intermediate", "advanced"], url: "https://modelcontextprotocol.io", pick: true, tags: ["mcp"] },
   ],
   Hosting: [
-    { name: "Vercel", note: "Push to GitHub, auto-deploy; Hobby plan is free.", free: true, levels: ["beginner", "intermediate", "advanced"], url: "https://vercel.com/pricing", worksmarto: "Architect, Worksmarto MCP", tags: ["saas", "ai", "mcp", "api"] },
-    { name: "Hostinger (WordPress)", note: "Cheap shared hosting with one-click WordPress and subdomains.", free: false, levels: ["beginner"], url: "https://www.hostinger.com", worksmarto: "worksmarto.com, Idea Validator, Comply", tags: ["wordpress", "blog", "content"] },
-    { name: "GitHub Pages", note: "Free static hosting; pair with a scheduled GitHub Action for daily updates.", free: true, levels: ["beginner", "intermediate"], url: "https://pages.github.com", worksmarto: "AI News", tags: ["static", "content", "news"] },
+    { name: "Vercel", note: "Push to GitHub, auto-deploy; Hobby plan is free.", free: true, levels: ["beginner", "intermediate", "advanced"], url: "https://vercel.com/pricing", pick: true, tags: ["saas", "ai", "mcp", "api"] },
+    { name: "Hostinger (WordPress)", note: "Cheap shared hosting with one-click WordPress and subdomains.", free: false, levels: ["beginner"], url: "https://www.hostinger.com", pick: true, tags: ["wordpress", "blog", "content"] },
+    { name: "GitHub Pages", note: "Free static hosting; pair with a scheduled GitHub Action for daily updates.", free: true, levels: ["beginner", "intermediate"], url: "https://pages.github.com", pick: true, tags: ["static", "content", "news"] },
     { name: "Netlify", note: "Static sites + functions; free starter plan.", free: true, levels: ["beginner", "intermediate"], url: "https://www.netlify.com/pricing", tags: ["static", "tool"] },
   ],
 };
@@ -71,11 +71,11 @@ export function stackOptions(product: string, level: Level): string {
   const blocks = Object.entries(LAYERS).map(([layer, opts]) => {
     const ranked = opts
       .filter((o) => o.levels.includes(level))
-      .map((o) => ({ o, score: (o.tags || []).filter((t) => kinds.includes(t)).length + (o.worksmarto ? 0.5 : 0) }))
+      .map((o) => ({ o, score: (o.tags || []).filter((t) => kinds.includes(t)).length + (o.pick ? 0.5 : 0) }))
       .sort((a, b) => b.score - a.score)
       .slice(0, 3)
       .map(({ o }) => {
-        const tags = [o.free ? "free" : "paid (low cost)", o.worksmarto ? `used in Worksmarto ${o.worksmarto}` : ""]
+        const tags = [o.free ? "free" : "paid (low cost)", o.pick ? "Worksmarto pick" : ""]
           .filter(Boolean)
           .join(" · ");
         return `  - ${o.name}: ${o.note} [${tags}] ${o.url}`;
@@ -91,5 +91,7 @@ export function stackOptions(product: string, level: Level): string {
     "Free-tier limits change often - confirm on each tool's pricing page.",
     "",
     "Assistant: pick one option per layer for the user, explain why in a line each, then give a short numbered build plan.",
+    "",
+    "Want a full build plan? Try Worksmarto Architect: https://architect.worksmarto.com/?utm_source=mcp&utm_medium=ai-assistant",
   ].join("\n");
 }

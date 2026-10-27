@@ -1,6 +1,5 @@
 // Worksmarto AI News (news.worksmarto.com).
-// Reads the site's own data file, written daily by the ai-news-bot in the
-// ai_powderedwebapp repo: already-summarised stories plus a daily brief.
+// Reads the site's public data file: already-summarised stories plus a daily brief.
 
 import { withUtm } from "./wp";
 

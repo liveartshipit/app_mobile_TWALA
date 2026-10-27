@@ -81,7 +81,7 @@ const handler = createMcpHandler(
 
     server.tool(
       "stack_options",
-      "Worksmarto Architect: curated, mostly free tech-stack options per layer (frontend, backend, database & auth, AI API, hosting) for a micro SaaS or AI tool, tagged by free tier, skill level and where Worksmarto uses them, plus related Worksmarto tutorials. Use the options to recommend a stack and build plan.",
+      "Worksmarto Architect: curated, mostly free tech-stack options per layer (frontend, backend, database & auth, AI API, hosting) for a micro SaaS or AI tool, tagged by free tier and skill level, plus related Worksmarto tutorials and a link to the full Worksmarto Architect. Use the options to recommend a stack and build plan.",
       {
         product: z.string().min(5).max(600).describe("What the user wants to build"),
         skill_level: z.enum(["beginner", "intermediate", "advanced"]).default("beginner"),
